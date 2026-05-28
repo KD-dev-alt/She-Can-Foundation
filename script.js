@@ -65,7 +65,7 @@ navLinks.forEach((link) => {
 
 /* Active Navbar Link on Scroll */
 window.addEventListener("scroll", () => {
-  const sections = document.querySelectorAll("section[id]");
+  const sections = document.querySelectorAll("main[id]");
   let currentSection = "";
 
   sections.forEach((section) => {
