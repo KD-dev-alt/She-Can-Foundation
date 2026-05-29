@@ -9,6 +9,7 @@ const typingText = document.getElementById("typingText");
 const toast = document.getElementById("toast");
 
 const navLinks = document.querySelectorAll(".site-nav a");
+const sections = document.querySelectorAll("section[id]");
 const searchInput = document.querySelector(".search-panel input");
 const contactForm = document.querySelector(".contact-form");
 const subscribeForm = document.querySelector(".subscribe form");
@@ -20,13 +21,13 @@ window.addEventListener("load", () => {
   }, 1000);
 });
 
-/* Saved Theme */
+// Check Saved Theme
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark");
   themeBtn.querySelector("i").className = "fa-regular fa-sun";
 }
 
-/* Theme Toggle */
+// Theme Button
 themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
 
@@ -37,14 +38,14 @@ themeBtn.addEventListener("click", () => {
   localStorage.setItem("theme", isDark ? "dark" : "light");
 });
 
-/* Search Toggle */
+// Search Button
 searchBtn.addEventListener("click", () => {
   searchPanel.classList.toggle("active");
   siteNav.classList.remove("active");
   searchInput.focus();
 });
 
-/* Mobile Menu Toggle */
+// Mobile Menu
 menuBtn.addEventListener("click", () => {
   siteNav.classList.toggle("active");
   searchPanel.classList.remove("active");
@@ -55,7 +56,7 @@ menuBtn.addEventListener("click", () => {
     : "fa-solid fa-bars";
 });
 
-/* Close Menu on Link Click */
+// Close Menu
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     siteNav.classList.remove("active");
@@ -63,14 +64,16 @@ navLinks.forEach((link) => {
   });
 });
 
-/* Active Navbar Link on Scroll */
+// Active Navbar
 window.addEventListener("scroll", () => {
-  const sections = document.querySelectorAll("main[id]");
   let currentSection = "";
-
   sections.forEach((section) => {
     const sectionTop = section.offsetTop - 120;
-    if (window.scrollY >= sectionTop) {
+    const sectionHeight = section.offsetHeight;
+    if (
+      window.scrollY >= sectionTop &&
+      window.scrollY < sectionTop + sectionHeight
+    ) {
       currentSection = section.getAttribute("id");
     }
   });
@@ -82,8 +85,11 @@ window.addEventListener("scroll", () => {
     }
   });
 });
+window.addEventListener("load", () => {
+  navLinks[0].classList.add("active");
+});
 
-/* Scroll Reveal Effect */
+// Scroll Animation
 const revealElements = document.querySelectorAll(
   ".hero-container, .hero-section-img, .impact-card, .program-card, .program-main-card, .program-side-card, .program-wide-card, .volunteer-content, .volunteer-img, .contact-form, .footer-grid",
 );
@@ -105,7 +111,7 @@ const revealOnScroll = () => {
 window.addEventListener("scroll", revealOnScroll);
 window.addEventListener("load", revealOnScroll);
 
-/* Search Section */
+// Search Section
 searchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     const value = searchInput.value.toLowerCase().trim();
@@ -133,7 +139,7 @@ searchInput.addEventListener("keydown", (e) => {
   }
 });
 
-/* Contact Form */
+// Contact Form
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   showToast("Application submitted successfully!");
@@ -148,7 +154,7 @@ function showToast(message) {
   }, 3000);
 }
 
-/* Subscribe Form */
+// Subscribe Form
 subscribeForm.addEventListener("submit", (e) => {
   e.preventDefault();
   showToast("Thank you for subscribing!");
